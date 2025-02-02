@@ -18,14 +18,25 @@ Stores a receipt in the database and returns its unique identifier.
 #### **Request Body (JSON):**
 ```json
 {
-    "retailer": "Walgreens",
-    "purchaseDate": "2022-01-02",
-    "purchaseTime": "08:13",
-    "total": "2.65",
-    "items": [
-        { "shortDescription": "Pepsi - 12-oz", "price": "1.25" },
-        { "shortDescription": "Dasani", "price": "1.40" }
-    ]
+  "retailer": "M&M Corner Market",
+  "purchaseDate": "2022-03-20",
+  "purchaseTime": "14:33",
+  "items": [
+    {
+      "shortDescription": "Gatorade",
+      "price": "2.25"
+    },{
+      "shortDescription": "Gatorade",
+      "price": "2.25"
+    },{
+      "shortDescription": "Gatorade",
+      "price": "2.25"
+    },{
+      "shortDescription": "Gatorade",
+      "price": "2.25"
+    }
+  ],
+  "total": "9.00"
 }
 ```
 #### **Response (JSON):**
@@ -64,7 +75,7 @@ GET /receipts/550e8400-e29b-41d4-a716-446655440000/points
 #### **Example Response (JSON):**
 ```json
 {
-    "points": 82
+    "points": 109
 }
 ```
 #### **Possible Responses:**
@@ -85,7 +96,7 @@ Ensure you have the following installed:
 ### **Steps to Run**
 1. **Clone the repository (if applicable):**
    ```sh
-   git clone https://github.com/your-repo/receipt-processor.git
+   git clone https://github.com/bradyscode/receipt-processor.git
    cd receipt-processor
    ```
 
@@ -93,7 +104,7 @@ Ensure you have the following installed:
    ```sh
    dotnet run
    ```
-   This will start the server, typically on `http://localhost:5000` or `https://localhost:7000`.
+   This will start the server, review the command line to find the port the api is running on`.
 
 3. **Test the API using a tool like Postman or CURL:**
    ```sh
@@ -111,55 +122,4 @@ Ensure you have the following installed:
 ## **Project Configuration: In-Memory Database**
 This application uses an **In-Memory Database** with **Entity Framework Core** for temporary storage.
 
-### **Configuring the Database in `AppDbContext.cs`**
-```csharp
-using Microsoft.EntityFrameworkCore;
-using receipt_processor.Models;
-
-namespace receipt_processor.Data
-{
-    public class AppDbContext : DbContext
-    {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
-        public DbSet<Receipt> Receipt { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseInMemoryDatabase("ReceiptsDB");
-        }
-    }
-}
-```
-
-### **Registering the Database in `Program.cs`**
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseInMemoryDatabase("ReceiptsDB"));
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-app.UseSwagger();
-app.UseSwaggerUI();
-
-app.MapControllers();
-
-app.Run();
-```
-
 ---
-
-## **Next Steps**
-- Extend functionality by using **SQL Server** or **SQLite** instead of an In-Memory Database.
-- Add authentication and authorization to secure endpoints.
-- Implement more validation for input data.
-
----
-
-This documentation should give you everything needed to **run, test, and extend** the API. 🚀 Let me know if you need any refinements!
