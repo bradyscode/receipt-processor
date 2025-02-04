@@ -97,7 +97,7 @@ Ensure you have the following installed:
 1. **Clone the repository (if applicable):**
    ```sh
    git clone https://github.com/bradyscode/receipt-processor.git
-   cd receipt-processor
+   cd receipt-processor/receipt-processor
    ```
 
 2. **Run the application using the .NET CLI:**
